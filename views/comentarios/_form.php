@@ -14,8 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'comentario')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'fecha')->textInput() ?>
-
     <?= $form->field($model, 'id_usuario')->textInput() ?>
 
     <?= $form->field($model, 'id_noticia')->textInput() ?>

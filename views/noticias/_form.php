@@ -18,8 +18,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'enlace')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'publicado')->textInput() ?>
-
     <?= $form->field($model, 'tipo_noticia')->textInput() ?>
 
     <?= $form->field($model, 'id_usuario')->textInput() ?>

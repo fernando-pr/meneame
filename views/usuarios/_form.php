@@ -18,11 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'token')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'activacion')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

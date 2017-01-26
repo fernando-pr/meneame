@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Noticia;
 
 class SiteController extends Controller
 {
@@ -60,7 +61,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = Noticia::find()->all();
+
+        return $this->render('index', [
+            'model' => $model,
+        ]);
     }
 
     /**

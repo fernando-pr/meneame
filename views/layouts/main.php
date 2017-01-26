@@ -26,8 +26,9 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+    Yii::$app->homeUrl = ['/noticias/index'];
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Meneame',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -40,6 +41,7 @@ AppAsset::register($this);
             ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Tipos de Noticias', 'url' => ['/tipo-noticias/index']],
+
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
