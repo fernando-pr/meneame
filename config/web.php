@@ -38,16 +38,31 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'usuario/<id:\d+>' => 'usuarios/view',
+                'usuarios/update/<id:\d+>' => 'usuarios/update',
+                'usuarios/index/<sort>' => 'usuarios/index',
+                'usuarios/index/<page:\d+>/<per-page:\d+>' => 'usuarios/index',
+                'noticia/<id:\d+>' => 'noticias/view',
+                'noticias/update/<id:\d+>' => 'noticias/update',
+                'noticias/index/<sort>' => 'noticias/index',
+                'noticias/index/<page:\d+>/<per-page:\d+>' => 'noticias/index',
+                'comentario/<id:\d+>' => 'comentarios/view',
+                'comentarios/update/<id:\d+>' => 'comentarios/update',
+                'comentarios/index/<sort>' => 'comentarios/index',
+                'comentarios/index/<page:\d+>/<per-page:\d+>' => 'comentarios/index',
+                'tipo-noticia/<id:\d+>' => 'tipo-noticias/view',
+                'tipo-noticias/update/<id:\d+>' => 'tipo-noticias/update',
+                'tipo-noticias/index/<sort>' => 'tipo-noticias/index',
+                'tipo-noticias/index/<page:\d+>/<per-page:\d+>' => 'tipo-noticias/index',
             ],
         ],
-        */
     ],
     'params' => $params,
+    'language' => 'es_ES',
 ];
 
 if (YII_ENV_DEV) {

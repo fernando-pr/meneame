@@ -27,7 +27,7 @@ create table noticias (
     titulo       varchar(255)   not null,
     cuerpo       text           not null,
     enlace       varchar(255)   not null,
-    publicado    timestamptz    not null default current_timestamp,
+    publicado    timestamptz    default current_timestamp,
     tipo_noticia bigint         not null constraint fk_noticias_tipo_noticia
                                 references tipo_noticia(id) on delete no action
                                 on update cascade,
@@ -42,7 +42,7 @@ drop table if exists comentarios cascade;
 create table comentarios (
     id           bigserial      constraint pk_comentarios primary key,
     comentario   text           not null,
-    fecha        timestamptz    not null default current_timestamp,
+    fecha        timestamptz    default current_timestamp,
     id_usuario   bigint         not null constraint fk_comentarios_usuarios
                                 references usuarios(id) on delete no action
                                 on update cascade,
