@@ -26,7 +26,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    Yii::$app->homeUrl = ['/noticias/index'];
+    Yii::$app->homeUrl = ['site/index'];
     NavBar::begin([
         'brandLabel' => 'Meneame',
         'brandUrl' => Yii::$app->homeUrl,

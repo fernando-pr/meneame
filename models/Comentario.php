@@ -58,7 +58,7 @@ class Comentario extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdNoticia()
+    public function getNoticia()
     {
         return $this->hasOne(Noticia::className(), ['id' => 'id_noticia'])->inverseOf('comentarios');
     }
@@ -66,7 +66,7 @@ class Comentario extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdUsuario()
+    public function getUsuario()
     {
         return $this->hasOne(Usuario::className(), ['id' => 'id_usuario'])->inverseOf('comentarios');
     }

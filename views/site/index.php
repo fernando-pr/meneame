@@ -20,10 +20,11 @@ $noticias = $model;
                     <h2><a href="<?=$noticia->enlace ?>"> <?= $noticia->titulo ?></a></h2>
                     <p><?= $noticia->cuerpo ?></p>
                     <p>
-                        subido por :<?= $noticia->usuario->nombre?><br>
-                        tipo:<?= $noticia->tipoNoticia->tipo?><br>
+                        subido por :<?= $noticia->usuario->nombre?> |
+                        tipo:<?= $noticia->tipoNoticia->tipo?> |
                         fecha:<?= $noticia->publicado ?>
                     </p>
+                    <a href="">Comentarios</a>
                 </div>
                 <?php } ?>
 

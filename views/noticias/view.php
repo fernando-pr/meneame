@@ -1,41 +1,35 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Noticia */
 
-$this->title = $model->id;
+$this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Noticias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="noticia-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <h2><a href="<?=$model->enlace ?>"> <?= $model->titulo ?></a></h2>
     </p>
+    <p><?= $model->cuerpo ?></p>
+    <p>
+        subido por :<?= $model->usuario->nombre?> |
+        tipo:<?= $model->tipoNoticia->tipo?> |
+        fecha:<?= $model->publicado ?>
+    </p><br><br>
+    <h3>Comentarios</h3><br><br>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'titulo',
-            'cuerpo:ntext',
-            'enlace',
-            'publicado',
-            'tipo_noticia',
-            'id_usuario',
-        ],
-    ]) ?>
-
+    <?php foreach ($comentarios as $comentario) {?>
+        <div class="bg-info">
+            <p>Autor del comentario:<?= $comentario->usuario->nombre ?></p>
+            <p><?= $comentario->comentario ?></p>
+            <p>Fecha comentario:<?= $comentario->fecha ?></p>
+        </div>
+    <?php } ?>
 </div>

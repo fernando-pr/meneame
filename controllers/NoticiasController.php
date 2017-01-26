@@ -8,6 +8,7 @@ use app\models\NoticiaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Comentario;
 
 /**
  * NoticiasController implements the CRUD actions for Noticia model.
@@ -51,8 +52,11 @@ class NoticiasController extends Controller
      */
     public function actionView($id)
     {
+        $comentarios = Comentario::findAll(['id_noticia' => $id]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'comentarios' => $comentarios,
         ]);
     }
 
