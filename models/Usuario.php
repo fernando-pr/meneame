@@ -18,7 +18,7 @@ use Yii;
  * @property Comentarios[] $comentarios
  * @property Noticias[] $noticias
  */
-class Usuario extends \yii\db\ActiveRecord
+class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * @inheritdoc
@@ -58,6 +58,49 @@ class Usuario extends \yii\db\ActiveRecord
             'password' => 'Password',
             'created_at' => 'Created At',
         ];
+    }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+    }
+
+    public static function buscarPorNombre($nombre)
+    {
+        return static::findOne(['nombre' => $nombre]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+    }
+
+    public function validateAuthKey($authKey)
+    {
+    }
+
+    public function validarPassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->password = Yii::$app->security->generatePasswordHash($this->password);
+            $this->token = Yii::$app->security->generateRandomString();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
