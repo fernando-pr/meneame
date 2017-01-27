@@ -61,7 +61,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = Noticia::find()->all();
+        $model = Noticia::find()->orderBy('publicado DESC')->all();
 
         return $this->render('index', [
             'model' => $model,

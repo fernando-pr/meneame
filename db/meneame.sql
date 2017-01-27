@@ -50,3 +50,75 @@ create table comentarios (
                                 references noticias(id) on delete no action
                                 on update cascade
 );
+
+--insert en tipo noticias
+insert into tipo_noticia(tipo)
+values ('Actualidad');
+insert into tipo_noticia(tipo)
+values ('Tecnologia');
+insert into tipo_noticia(tipo)
+values ('Futbol');
+
+--Insert en usuarios
+insert into usuarios(nombre, email, password)
+values ('pepe','pepe@pepe.com', crypt('pepe', gen_salt('bf', 13)));
+
+insert into usuarios(nombre, email, password)
+values ('juan','juan@juan.com', crypt('juan', gen_salt('bf', 13)));
+
+insert into usuarios(nombre, email, password)
+values ('manolo','manolo@manolo.com', crypt('manolo', gen_salt('bf', 13)));
+
+insert into usuarios(nombre, email, password)
+values ('admin','admin@admin.com', crypt('admin', gen_salt('bf', 13)));
+
+--Insert noticias
+insert into noticias(titulo, cuerpo, enlace, tipo_noticia, id_usuario)
+values ('noticia 1', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
+magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+ ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis
+ enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+ felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.', 'enlace noticia 1', 1, 1);
+
+ insert into noticias(titulo, cuerpo, enlace, tipo_noticia, id_usuario)
+ values ('noticia 2', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+ Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
+ magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+  ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis
+  enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+ In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+  felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.', 'enlace noticia 2', 2, 2);
+
+  insert into noticias(titulo, cuerpo, enlace, tipo_noticia, id_usuario)
+  values ('noticia 3', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
+  magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+   ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis
+   enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+  In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+   felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.', 'enlace noticia 3', 3, 3);
+
+
+-- Insert Comentarios
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 1', 1, 1);
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 2', 1, 1);
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 3', 1, 1);
+
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 1', 2, 2);
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 2', 2, 2);
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 3', 2, 2);
+
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 1', 3, 3);
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 2', 3, 3);
+insert into comentarios(comentario, id_usuario,id_noticia )
+values ('soy el comentario 3', 3, 3);

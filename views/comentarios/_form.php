@@ -14,10 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'comentario')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'id_usuario')->textInput() ?>
-
-    <?= $form->field($model, 'id_noticia')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
