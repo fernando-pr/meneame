@@ -61,6 +61,11 @@ class Noticia extends \yii\db\ActiveRecord
         ];
     }
 
+    public function cuantosComentarios($id_noticia)
+    {
+        return $comentarios = $this->getComentarios()->where(['id_noticia' => $id_noticia])->count();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

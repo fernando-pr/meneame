@@ -24,7 +24,7 @@ $noticias = $model;
                         tipo:<?= $noticia->tipoNoticia->tipo?> |
                         fecha:<?= $noticia->publicado ?>
                     </p>
-                    <a href="">Comentarios</a>
+                    <a href="../noticia/<?= $noticia->id?>">Comentarios (<?= $noticia->cuantosComentarios($noticia->id); ?>)</a>
                 </div>
                 <?php } ?>
 
