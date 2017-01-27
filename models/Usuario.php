@@ -20,6 +20,8 @@ use Yii;
  */
 class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $passwordConfirm;
+
     /**
      * @inheritdoc
      */
@@ -34,13 +36,14 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['nombre', 'email', 'password'], 'required'],
+            [['nombre', 'email', 'password', 'passwordConfirm'], 'required'],
             [['created_at'], 'safe'],
             [['nombre'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 255],
             [['token', 'activacion'], 'string', 'max' => 32],
             [['password'], 'string', 'max' => 60],
             [['nombre'], 'unique'],
+            [['passwordConfirm'], 'confirmarPassword'],
         ];
     }
 
@@ -87,6 +90,18 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->token === $authKey;
+    }
+
+    public function confirmarPassword($attribute, $params)
+    {
+        if ($this->password !== $this->passwordConfirm) {
+            $this->addError($attribute, 'Las contraseñas no coinciden');
+        }
+    }
+
+    public function esAdmin()
+    {
+        return $this->nombre === 'admin';
     }
 
     public function validarPassword($password)

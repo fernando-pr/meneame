@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Usuario;
 use app\models\UsuarioSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,6 +25,19 @@ class UsuariosController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Yii::$app->user->esAdmin;
+                        }
+                    ],
                 ],
             ],
         ];
@@ -65,7 +79,10 @@ class UsuariosController extends Controller
     {
         $model = new Usuario();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            $model->token = Yii::$app->security->generateRandomString();
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

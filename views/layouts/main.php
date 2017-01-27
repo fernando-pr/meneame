@@ -34,10 +34,8 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Noticias', 'url' => ['/noticias/index']],
+    $items = [
+        ['label' => 'Noticias', 'url' => ['/noticias/index']],
             ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Tipos de Noticias', 'url' => ['/tipo-noticias/index']],
@@ -54,7 +52,13 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             )
-        ],
+    ];
+    if (Yii::$app->user->esAdmin) {
+        array_unshift($items, ['label' => 'Usuarios', 'url' => ['usuarios/index']]);
+    }
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => $items,
     ]);
     NavBar::end();
     ?>
