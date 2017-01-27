@@ -37,8 +37,8 @@ AppAsset::register($this);
     $items = [
         ['label' => 'Noticias', 'url' => ['/noticias/index']],
             ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
-            ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-            ['label' => 'Tipos de Noticias', 'url' => ['/tipo-noticias/index']],
+            // ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+            // ['label' => 'Tipos de Noticias', 'url' => ['/tipo-noticias/index']],
 
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
@@ -55,6 +55,7 @@ AppAsset::register($this);
     ];
     if (Yii::$app->user->esAdmin) {
         array_unshift($items, ['label' => 'Usuarios', 'url' => ['usuarios/index']]);
+        array_unshift($items, ['label' => 'Tipos de Noticias', 'url' => ['tipo-noticias/index']]);
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

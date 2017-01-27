@@ -7,11 +7,12 @@ class UsuarioForm extends \yii\base\Model
     public $nombre;
     public $password;
     public $passwordConfirm;
+    public $email;
 
     public function rules()
     {
         return [
-            [['nombre', 'password', 'passwordConfirm'], 'required'],
+            [['nombre', 'password', 'passwordConfirm', 'email'], 'required'],
             [['nombre'], 'string', 'max' => 15],
         ];
     }
@@ -22,6 +23,7 @@ class UsuarioForm extends \yii\base\Model
             'nombre' => 'Nombre',
             'password' => 'Contraseña',
             'passwordConfirm' => 'Confirmar contraseña',
+            'email' => 'Email',
         ];
     }
 }
