@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         tipo:<?= $model->tipoNoticia->tipo?> |
         fecha:<?= $model->publicado ?>
     </p><br><br>
-    <h3>Comentarios</h3><br><br>
+    <h3>Comentarios (<?= $numComentarios; ?>)</h3><br><br>
     <p>
         <!-- Html::a('Profile', ['user/view', 'id' => $id], ['class' => 'profile-link'])  -->
         <?= Html::a(

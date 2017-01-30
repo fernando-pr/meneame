@@ -8,6 +8,7 @@ use app\models\ComentarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ComentariosController implements the CRUD actions for Comentario model.
@@ -24,6 +25,28 @@ class ComentariosController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'view', 'delete', 'index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'view'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return !Yii::$app->user->isGuest;
+                        }
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'update', 'view', 'delete', 'index'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->esAdmin;
+                        }
+                    ],
                 ],
             ],
         ];
@@ -68,7 +91,7 @@ class ComentariosController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->id_usuario = Yii::$app->user->id;
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['../noticias/view', 'id' => $id_noticia]);
             }
         }
         return $this->render('create', [

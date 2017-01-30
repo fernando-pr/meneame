@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Comentario;
+use yii\filters\AccessControl;
 
 /**
  * NoticiasController implements the CRUD actions for Noticia model.
@@ -25,6 +26,20 @@ class NoticiasController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete', 'index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'view', 'delete', 'index'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->esAdmin;
+                        }
+                    ],
                 ],
             ],
         ];
@@ -53,10 +68,12 @@ class NoticiasController extends Controller
     public function actionView($id)
     {
         $comentarios = Comentario::findAll(['id_noticia' => $id]);
+        $numComentarios = count($comentarios);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'comentarios' => $comentarios,
+            'numComentarios' => $numComentarios,
         ]);
     }
 

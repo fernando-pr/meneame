@@ -35,8 +35,8 @@ AppAsset::register($this);
         ],
     ]);
     $items = [
-        ['label' => 'Noticias', 'url' => ['/noticias/index']],
-            ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
+        //['label' => 'Noticias', 'url' => ['/noticias/index']],
+        //    ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
             // ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             // ['label' => 'Tipos de Noticias', 'url' => ['/tipo-noticias/index']],
 
@@ -56,6 +56,8 @@ AppAsset::register($this);
     if (Yii::$app->user->esAdmin) {
         array_unshift($items, ['label' => 'Usuarios', 'url' => ['usuarios/index']]);
         array_unshift($items, ['label' => 'Tipos de Noticias', 'url' => ['tipo-noticias/index']]);
+        array_unshift($items, ['label' => 'Noticias', 'url' => ['/noticias/index']]);
+        array_unshift($items, ['label' => 'Comentarios', 'url' => ['/comentarios/index']]);
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
