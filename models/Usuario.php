@@ -20,6 +20,9 @@ use Yii;
  */
 class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    const ESCENARIO_CREATE = 'create';
+
+    public $pass;
     public $passwordConfirm;
 
     /**
@@ -36,12 +39,14 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['nombre', 'email', 'password', 'passwordConfirm'], 'required'],
+            // [['nombre', 'email', 'password', 'passwordConfirm'], 'required'],
+            [['nombre', 'email'], 'required'],
+            [['password', 'passwordConfirm'], 'required', 'on' => self::ESCENARIO_CREATE],
+            [['password'], 'safe'],
             [['created_at'], 'safe'],
             [['nombre'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 255],
             [['token', 'activacion'], 'string', 'max' => 32],
-            [['password'], 'string', 'max' => 60],
             [['nombre'], 'unique'],
             [['passwordConfirm'], 'confirmarPassword'],
         ];
@@ -58,7 +63,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => 'Email',
             'token' => 'Token',
             'activacion' => 'Activacion',
-            'password' => 'Password',
+            'password' => 'Contraseña',
+            'passwordConfirm' => 'Confirmar contraseña',
             'created_at' => 'Created At',
         ];
     }
@@ -112,8 +118,12 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            $this->password = Yii::$app->security->generatePasswordHash($this->password);
-            $this->token = Yii::$app->security->generateRandomString();
+            if ($this->password != '' || $insert) {
+                $this->password = Yii::$app->security->generatePasswordHash($this->password);
+            }
+            if ($insert) {
+                $this->token = Yii::$app->security->generateRandomString();
+            }
             return true;
         } else {
             return false;
