@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "noticias".
  *
@@ -60,7 +58,11 @@ class Noticia extends \yii\db\ActiveRecord
             'id_usuario' => 'Id Usuario',
         ];
     }
-
+    /**
+     * Devuelve el número de comentarios que tiene una noticia concreta
+     * @param  int $id_noticia El id de la noticia
+     * @return int El número de comentarios que tiene la noticia pasada como parametro
+     */
     public function cuantosComentarios($id_noticia)
     {
         return $comentarios = $this->getComentarios()->where(['id_noticia' => $id_noticia])->count();

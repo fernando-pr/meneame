@@ -20,9 +20,21 @@ use Yii;
  */
 class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    /**
+     * Valor del escenario para la creación de nuevos usuarios
+     * @var string
+     */
     const ESCENARIO_CREATE = 'create';
 
+    /**
+     * Contraseña del usuario
+     * @var string
+     */
     public $pass;
+    /**
+     * Confirmación de la contraseña del usuario
+     * @var string
+     */
     public $passwordConfirm;
 
     /**
@@ -78,6 +90,11 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
     }
 
+    /**
+     * Busca un usuario por el nombre
+     * @param  string $nombre   Nombre del usuario
+     * @return static           Instancia del usuario que coincida con el nombre
+     */
     public static function buscarPorNombre($nombre)
     {
         return static::findOne(['nombre' => $nombre]);
@@ -98,6 +115,11 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->token === $authKey;
     }
 
+    /**
+     * Comprueba la contraseña y la confirmacion de la contraseña
+     * @param  [type] $attribute [description]
+     * @param  [type] $params    [description]
+     */
     public function confirmarPassword($attribute, $params)
     {
         if ($this->password !== $this->passwordConfirm) {
@@ -105,11 +127,20 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
     }
 
+    /**
+     * Comprueba si el usuario es administrador
+     * @return bool Devuelve verdadero si el nombre del usuario es admin
+     */
     public function esAdmin()
     {
         return $this->nombre === 'admin';
     }
 
+    /**
+     * Comprueba si la contraseña introducida es valida
+     * @param  string $password La contraseña del usuario
+     * @return bool             Devuelve verdadero si la contraseña valida
+     */
     public function validarPassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->password);
