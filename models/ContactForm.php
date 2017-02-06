@@ -10,10 +10,30 @@ use yii\base\Model;
  */
 class ContactForm extends Model
 {
+    /**
+     *   nombre del contacto
+     * @var string
+     */
     public $name;
+    /**
+     *  email del contacto
+     * @var string
+     */
     public $email;
+    /**
+    *  asunto del mensaje
+    * @var string
+    */
     public $subject;
+    /**
+     *  mensaje
+     * @var string
+     */
     public $body;
+    /**
+     * captcha
+     * @var string
+     */
     public $verifyCode;
 
 

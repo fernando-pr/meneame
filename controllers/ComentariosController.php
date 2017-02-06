@@ -69,7 +69,7 @@ class ComentariosController extends Controller
 
     /**
      * Displays a single Comentario model.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      */
     public function actionView($id)
@@ -82,6 +82,7 @@ class ComentariosController extends Controller
     /**
      * Creates a new Comentario model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param int $id_noticia
      * @return mixed
      */
     public function actionCreate($id_noticia)
@@ -102,7 +103,7 @@ class ComentariosController extends Controller
     /**
      * Updates an existing Comentario model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -121,7 +122,7 @@ class ComentariosController extends Controller
     /**
      * Deletes an existing Comentario model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -134,7 +135,7 @@ class ComentariosController extends Controller
     /**
      * Finds the Comentario model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param int $id
      * @return Comentario the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
