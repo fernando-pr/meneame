@@ -94,7 +94,6 @@ class NoticiasController extends Controller
     public function actionCreate()
     {
         $model = new Noticia();
-        $tipos = TipoNoticia::find()->all();
 
         if ($model->load(Yii::$app->request->post())) {
             $model->id_usuario = Yii::$app->user->id;
@@ -102,6 +101,7 @@ class NoticiasController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
+            $tipos = TipoNoticia::find()->select('tipo, id')->orderBy('tipo')->indexBy('id')->column();
             return $this->render('create', [
                     'model' => $model,
                     'tipos' => $tipos,
@@ -119,11 +119,10 @@ class NoticiasController extends Controller
     {
         $model = $this->findModel($id);
 
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $tipos = TipoNoticia::find()->all()->indexBy('id')->column();
+            $tipos = TipoNoticia::find()->select('tipo, id')->orderBy('tipo')->indexBy('id')->column();
             return $this->render('update', [
                 'model' => $model,
                 'tipos' => $tipos,

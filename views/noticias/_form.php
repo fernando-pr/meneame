@@ -11,14 +11,14 @@ use yii\widgets\ActiveForm;
 <div class="noticia-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    
+
     <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'cuerpo')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'enlace')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tipo_noticia')->dropDownList($tipos) ?>
+    <?= $form->field($model, 'tipo_noticia')->textInput()->dropDownList($tipos) ?>
 
 
     <div class="form-group">
