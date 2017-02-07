@@ -35,18 +35,10 @@ class NoticiasController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create','update', 'view', 'delete', 'index'],
+                        'actions' => ['update', 'view', 'delete', 'index'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
                             return Yii::$app->user->esAdmin;
-                        }
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['create', 'view'],
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rule, $action) {
-                            return !Yii::$app->user->isGuest;
                         }
                     ],
                 ],
@@ -95,17 +87,14 @@ class NoticiasController extends Controller
     {
         $model = new Noticia();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->id_usuario = Yii::$app->user->id;
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $tipos = TipoNoticia::find()->select('tipo, id')->orderBy('tipo')->indexBy('id')->column();
+
             return $this->render('create', [
-                    'model' => $model,
-                    'tipos' => $tipos,
-                ]);
+            'model' => $model,
+            ]);
         }
     }
 
@@ -125,7 +114,6 @@ class NoticiasController extends Controller
             $tipos = TipoNoticia::find()->select('tipo, id')->orderBy('tipo')->indexBy('id')->column();
             return $this->render('update', [
                 'model' => $model,
-                'tipos' => $tipos,
             ]);
         }
     }
