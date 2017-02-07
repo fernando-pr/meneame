@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Noticia;
+use app\models\TipoNoticia;
 use app\models\NoticiaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -34,10 +35,18 @@ class NoticiasController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update', 'view', 'delete', 'index'],
+                        'actions' => ['create','update', 'view', 'delete', 'index'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
                             return Yii::$app->user->esAdmin;
+                        }
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'view'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return !Yii::$app->user->isGuest;
                         }
                     ],
                 ],
@@ -85,13 +94,18 @@ class NoticiasController extends Controller
     public function actionCreate()
     {
         $model = new Noticia();
+        $tipos = TipoNoticia::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->id_usuario = Yii::$app->user->id;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
             return $this->render('create', [
-                'model' => $model,
-            ]);
+                    'model' => $model,
+                    'tipos' => $tipos,
+                ]);
         }
     }
 
@@ -105,11 +119,14 @@ class NoticiasController extends Controller
     {
         $model = $this->findModel($id);
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $tipos = TipoNoticia::find()->all()->indexBy('id')->column();
             return $this->render('update', [
                 'model' => $model,
+                'tipos' => $tipos,
             ]);
         }
     }
