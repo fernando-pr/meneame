@@ -1,9 +1,9 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
 use app\models\Noticia;
+use app\models\TipoNoticia;
 use app\models\NoticiaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -34,17 +34,24 @@ class NoticiasController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update', 'view', 'delete', 'index'],
+                        'actions' => ['create','update', 'view', 'delete', 'index'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
                             return Yii::$app->user->esAdmin;
+                        }
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'view'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return !Yii::$app->user->isGuest;
                         }
                     ],
                 ],
             ],
         ];
     }
-
     /**
      * Lists all Noticia models.
      * @return mixed
@@ -53,13 +60,11 @@ class NoticiasController extends Controller
     {
         $searchModel = new NoticiaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-
     /**
      * Displays a single Noticia model.
      * @param int $id
@@ -69,14 +74,12 @@ class NoticiasController extends Controller
     {
         $comentarios = Comentario::findAll(['id_noticia' => $id]);
         $numComentarios = count($comentarios);
-
         return $this->render('view', [
             'model' => $this->findModel($id),
             'comentarios' => $comentarios,
             'numComentarios' => $numComentarios,
         ]);
     }
-
     /**
      * Creates a new Noticia model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -85,16 +88,19 @@ class NoticiasController extends Controller
     public function actionCreate()
     {
         $model = new Noticia();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->id_usuario = Yii::$app->user->id;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
+            $tipos = TipoNoticia::find()->select('tipo, id')->orderBy('tipo')->indexBy('id')->column();
             return $this->render('create', [
-                'model' => $model,
-            ]);
+                    'model' => $model,
+                    'tipos' => $tipos,
+                ]);
         }
     }
-
     /**
      * Updates an existing Noticia model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -104,16 +110,16 @@ class NoticiasController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $tipos = TipoNoticia::find()->select('tipo, id')->orderBy('tipo')->indexBy('id')->column();
             return $this->render('update', [
                 'model' => $model,
+                'tipos' => $tipos,
             ]);
         }
     }
-
     /**
      * Deletes an existing Noticia model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -123,10 +129,8 @@ class NoticiasController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
-
     /**
      * Finds the Noticia model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
