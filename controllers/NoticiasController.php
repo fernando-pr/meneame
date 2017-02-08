@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers;
 
 use Yii;
@@ -52,6 +53,7 @@ class NoticiasController extends Controller
             ],
         ];
     }
+
     /**
      * Lists all Noticia models.
      * @return mixed
@@ -60,11 +62,13 @@ class NoticiasController extends Controller
     {
         $searchModel = new NoticiaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
     /**
      * Displays a single Noticia model.
      * @param int $id
@@ -74,12 +78,14 @@ class NoticiasController extends Controller
     {
         $comentarios = Comentario::findAll(['id_noticia' => $id]);
         $numComentarios = count($comentarios);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'comentarios' => $comentarios,
             'numComentarios' => $numComentarios,
         ]);
     }
+
     /**
      * Creates a new Noticia model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -88,6 +94,7 @@ class NoticiasController extends Controller
     public function actionCreate()
     {
         $model = new Noticia();
+
         if ($model->load(Yii::$app->request->post())) {
             $model->id_usuario = Yii::$app->user->id;
             if ($model->save()) {
@@ -101,6 +108,7 @@ class NoticiasController extends Controller
                 ]);
         }
     }
+
     /**
      * Updates an existing Noticia model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -110,6 +118,7 @@ class NoticiasController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -120,6 +129,7 @@ class NoticiasController extends Controller
             ]);
         }
     }
+
     /**
      * Deletes an existing Noticia model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -129,8 +139,10 @@ class NoticiasController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
         return $this->redirect(['index']);
     }
+
     /**
      * Finds the Noticia model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
