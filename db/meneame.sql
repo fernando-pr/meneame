@@ -29,10 +29,10 @@ create table noticias (
     enlace       varchar(255)   not null,
     publicado    timestamptz    default current_timestamp,
     tipo_noticia bigint         not null constraint fk_noticias_tipo_noticia
-                                references tipo_noticia(id) on delete no action
+                                references tipo_noticia(id) on delete cascade
                                 on update cascade,
     id_usuario   bigint         not null constraint fk_noticias_usuarios
-                                references usuarios(id) on delete no action
+                                references usuarios(id) on delete cascade
                                 on update cascade
 );
 
@@ -44,10 +44,10 @@ create table comentarios (
     comentario   text           not null,
     fecha        timestamptz    default current_timestamp,
     id_usuario   bigint         not null constraint fk_comentarios_usuarios
-                                references usuarios(id) on delete no action
+                                references usuarios(id) on delete cascade
                                 on update cascade,
     id_noticia   bigint         not null constraint fk_comentarios_noticias
-                                references noticias(id) on delete no action
+                                references noticias(id) on delete cascade
                                 on update cascade
 );
 
