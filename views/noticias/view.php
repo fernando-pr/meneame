@@ -39,4 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <p>Fecha comentario:<?= $comentario->fecha ?></p>
         </div>
         <?php } ?>
-    </div>
+    </div><?=
+//$this->render('../comentarios/_form', ['model' => $comentarioNuevo])
+
+
+
+    Yii::$app->controller->renderPartial('../comentarios/_form', ['model' => $comentarioNuevo]);
+?>

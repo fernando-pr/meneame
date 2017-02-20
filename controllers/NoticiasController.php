@@ -76,6 +76,17 @@ class NoticiasController extends Controller
      */
     public function actionView($id)
     {
+        $comentarioNuevo = new Comentario(['id_noticia' => $id]);
+
+        if ($comentarioNuevo->load(Yii::$app->request->post())) {
+            $comentarioNuevo->id_usuario = Yii::$app->user->id;
+            $comentarioNuevo->id_noticia = $id;
+            if ($comentarioNuevo->save()) {
+                return $this->redirect(['../noticias/view', 'id' => $id]);
+            }
+        }
+
+
         $comentarios = Comentario::findAll(['id_noticia' => $id]);
         $numComentarios = count($comentarios);
 
@@ -83,6 +94,7 @@ class NoticiasController extends Controller
             'model' => $this->findModel($id),
             'comentarios' => $comentarios,
             'numComentarios' => $numComentarios,
+            'comentarioNuevo' => $comentarioNuevo,
         ]);
     }
 
